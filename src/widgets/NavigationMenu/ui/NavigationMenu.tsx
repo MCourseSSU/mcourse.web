@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu as MenuIcon, Home, Calendar, User, BookOpen, Settings, Globe } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '../../../shared/ui/sheet';
 import { cn } from '../../../shared/lib/cn';
@@ -14,7 +13,7 @@ const menuItems = [
 ];
 
 const MenuContent = ({ className = "", isMobile = false }: { className?: string, isMobile?: boolean }) => {
-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
+  const location = useLocation();
 
   return (
     <div className={cn(
@@ -25,17 +24,16 @@ const MenuContent = ({ className = "", isMobile = false }: { className?: string,
     )}>
       {menuItems.map((item) => {
         const Icon = item.icon;
+        const isActive = location.pathname === item.path;
         return (
           <Link
             key={item.name}
             to={item.path}
             className={cn(
               "flex items-center gap-3 px-4 py-2 text-white transition-all duration-300 relative",
-              isMobile ? "rounded-xl hover:bg-white hover:text-foreground" : "rounded-l-xl hover:bg-[#F5F5F5] hover:text-[#252525] relative group",
-              activeItem === item.name && !isMobile && "bg-background text-foreground"
+              isMobile ? "rounded-xl hover:bg-white hover:text-foreground" : "rounded-l-xl hover:text-[#252525] relative group",
+              isActive && "bg-background text-foreground"
             )}
-            onMouseEnter={() => !isMobile && setActiveItem(item.name)}
-            onMouseLeave={() => !isMobile && setActiveItem(null)}
           >
             <Icon className="w-5 h-5 flex-shrink-0" />
             <span className={cn(
@@ -44,7 +42,7 @@ const MenuContent = ({ className = "", isMobile = false }: { className?: string,
             )}>
               {item.name}
             </span>
-            {!isMobile && activeItem === item.name && (
+            {!isMobile && isActive && (
               <div className="absolute inset-0 bg-[#F5F5F5] -z-10 rounded-l-xl pr-0">
                 <div className="before:content-[''] before:absolute before:bg-transparent before:bottom-full before:right-0 before:h-[150%] before:w-[24px] before:rounded-br-[25px] before:shadow-[0_20px_0_0_#F5F5F5]" />
                 <div className="after:content-[''] after:absolute after:bg-transparent after:top-full after:right-0 after:h-[150%] after:w-[24px] after:rounded-tr-[25px] after:shadow-[0_-20px_0_0_#F5F5F5]" />
