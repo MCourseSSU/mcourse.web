@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu as MenuIcon, Home } from 'lucide-react';
+import { Menu as MenuIcon, Home, Calendar, User, BookOpen, Settings, Globe } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '../../../shared/ui/sheet';
 import { cn } from '../../../shared/lib/cn';
 
 const menuItems = [
   { name: 'Главная', path: '/', icon: Home },
+  { name: 'Планер', path: '/planner', icon: Calendar },
+  { name: 'Профиль', path: '/profile', icon: User },
+  { name: 'Курсы', path: '/courses', icon: BookOpen },
+  { name: 'Настройки', path: '/settings', icon: Settings },
+  { name: 'Глоссарий', path: '/glossary', icon: Globe },
 ];
 
 const MenuContent = ({ className = "", isMobile = false }: { className?: string, isMobile?: boolean }) => {
