@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { Menu as MenuIcon, Home, Calendar, User, BookOpen, Settings, Globe } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '../../../shared/ui/sheet';
 import { cn } from '../../../shared/lib/cn';
@@ -12,7 +13,7 @@ const menuItems = [
   { name: 'Глоссарий', path: '/glossary', icon: Globe },
 ];
 
-const MenuContent = ({ className = "", isMobile = false }: { className?: string, isMobile?: boolean }) => {
+const MenuContent = ({ className = "", isMobile = false, onClose }: { className?: string, isMobile?: boolean, onClose?: () => void }) => {
   const location = useLocation();
 
   return (
@@ -29,21 +30,23 @@ const MenuContent = ({ className = "", isMobile = false }: { className?: string,
           <Link
             key={item.name}
             to={item.path}
+            onClick={onClose}
             className={cn(
-              "flex items-center gap-3 px-4 py-2 text-white transition-all duration-300 relative",
-              isMobile ? "rounded-xl hover:bg-white hover:text-foreground" : "rounded-l-xl hover:text-[#252525] relative group",
-              isActive && "bg-background text-foreground"
+              "flex items-center gap-3 px-4 py-2 text-[#FAFAFA] transition-all duration-300 relative",
+              isMobile ? "rounded-xl hover:bg-[#F5F5F5] hover:text-[#252525]" : "rounded-l-[25px]  hover:text-[#252525] relative group",
+              isActive && "bg-[#F5F5F5] text-foreground"
             )}
           >
             <Icon className="w-5 h-5 flex-shrink-0" />
             <span className={cn(
-              "text-sm font-medium whitespace-nowrap transition-opacity duration-300",
+              "text-sm font-medium whitespace-nowrap transition-transform duration-300",
+              !isMobile && "group-hover:translate-x-2",
               !isMobile && "opacity-0 group-hover:opacity-100"
             )}>
               {item.name}
             </span>
             {!isMobile && isActive && (
-              <div className="absolute inset-0 bg-[#F5F5F5] -z-10 rounded-l-xl pr-0">
+              <div className="absolute inset-0 bg-[#F5F5F5] -z-10 rounded-l-[25px] pr-0 transition-transform duration-[0.6s]">
                 <div className="before:content-[''] before:absolute before:bg-transparent before:bottom-full before:right-0 before:h-[150%] before:w-[24px] before:rounded-br-[25px] before:shadow-[0_20px_0_0_#F5F5F5]" />
                 <div className="after:content-[''] after:absolute after:bg-transparent after:top-full after:right-0 after:h-[150%] after:w-[24px] after:rounded-tr-[25px] after:shadow-[0_-20px_0_0_#F5F5F5]" />
               </div>
@@ -56,18 +59,31 @@ const MenuContent = ({ className = "", isMobile = false }: { className?: string,
 };
 
 const NavigationMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       {/* Mobile Menu */}
       <div className="md:hidden">
-        <Sheet>
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button className="p-2">
               <MenuIcon className="w-6 h-6" />
             </button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[280px] p-0 bg-[#B291FF]">
-            <MenuContent isMobile />
+          <SheetContent
+            side="left"
+            className={cn(
+              "w-[280px] p-0 bg-[#B291FF] overflow-hidden transform-gpu transition-transform duration-1000 ease-in-out",
+              isMenuOpen ? "animate-slideIn" : "animate-slideOut"
+            )}
+            onInteractOutside={handleMenuClose}
+          >
+            <MenuContent isMobile onClose={handleMenuClose} />
           </SheetContent>
         </Sheet>
       </div>
