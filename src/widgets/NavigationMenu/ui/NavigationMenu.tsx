@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu as MenuIcon, Home, Calendar, User, BookOpen, Settings, Globe } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '../../../shared/ui/sheet';
 import { cn } from '../../../shared/lib/cn';
@@ -15,6 +15,21 @@ const menuItems = [
 
 const MenuContent = ({ className = "", isMobile = false, onClose }: { className?: string, isMobile?: boolean, onClose?: () => void }) => {
   const location = useLocation();
+  const [prevActive, setPrevActive] = useState(location.pathname);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (prevActive !== location.pathname) {
+      setIsAnimating(true);
+      setPrevActive(location.pathname);
+      
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 800);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, prevActive]);
 
   return (
     <div className={cn(
@@ -32,12 +47,15 @@ const MenuContent = ({ className = "", isMobile = false, onClose }: { className?
             to={item.path}
             onClick={onClose}
             className={cn(
-              "flex items-center gap-3 px-4 py-2 text-[#FAFAFA] transition-all duration-300 relative",
+              "flex items-center gap-3 px-4 py-2 text-[#FAFAFA] transition-all duration-700 relative",
               isMobile ? "rounded-xl hover:bg-[#F5F5F5] hover:text-[#252525]" : "rounded-l-[25px]  hover:text-[#252525] relative group",
               isActive && "bg-[#F5F5F5] text-foreground"
             )}
           >
-            <Icon className="w-5 h-5 flex-shrink-0" />
+            <Icon className={cn(
+              "w-5 h-5 flex-shrink-0 transition-transform duration-300",
+              !isMobile && "group-hover:scale-110 group-hover:rotate-3"
+            )} />
             <span className={cn(
               "text-sm font-medium whitespace-nowrap transition-transform duration-300",
               !isMobile && "group-hover:translate-x-2",
@@ -46,7 +64,11 @@ const MenuContent = ({ className = "", isMobile = false, onClose }: { className?
               {item.name}
             </span>
             {!isMobile && isActive && (
-              <div className="absolute inset-0 bg-[#F5F5F5] -z-10 rounded-l-[25px] pr-0 transition-transform duration-[0.6s]">
+              <div 
+               className={cn(
+                "absolute inset-0 bg-[#F5F5F5] -z-10 rounded-l-[25px] pr-0",
+                isAnimating && "menu-background-slide"
+              )}>
                 <div className="before:content-[''] before:absolute before:bg-transparent before:bottom-full before:right-0 before:h-[150%] before:w-[24px] before:rounded-br-[25px] before:shadow-[0_20px_0_0_#F5F5F5]" />
                 <div className="after:content-[''] after:absolute after:bg-transparent after:top-full after:right-0 after:h-[150%] after:w-[24px] after:rounded-tr-[25px] after:shadow-[0_-20px_0_0_#F5F5F5]" />
               </div>

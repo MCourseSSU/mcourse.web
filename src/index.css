@@ -42,3 +42,7 @@
 .animate-slideOut {
   animation: slideOut 0.5s ease-in-out;
 }
+  
+.menu-background-slide {
+  transform-origin: center left;
+}
