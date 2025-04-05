@@ -1,25 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu as MenuIcon, Home, Calendar, User, BookOpen, Settings, Globe, LucideIcon } from 'lucide-react';
+import { Menu as MenuIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/shared/ui/sheet';
 import { cn } from '@/shared/lib/cn';
-import { navigation } from '../model/navigation';
 import styles from './NavigationMenu.module.css';
-
-interface MenuItem {
-  name: string;
-  path: string;
-  icon: LucideIcon;
-}
-
-const menuItems: MenuItem[] = [
-  { name: 'Главная', path: navigation.HOME, icon: Home },
-  { name: 'Планер', path: navigation.PLANNER, icon: Calendar },
-  { name: 'Курсы', path: navigation.COURSES, icon: BookOpen },
-  { name: 'Глоссарий', path: navigation.GLOSSARY, icon: Globe },
-  { name: 'Профиль', path: navigation.PROFILE, icon: User },
-  { name: 'Настройки', path: navigation.SETTINGS, icon: Settings },
-];
+import { MenuItems, MenuItem } from '../model/MenuItem';
 
 const NavigationMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,7 +67,7 @@ const NavigationMenu = () => {
             )}
           >
             <div className="flex flex-col gap-2 p-[24px] pt-[60px]">
-              {menuItems.map(item => renderMenuItem(item, true))}
+              {MenuItems.map(item => renderMenuItem(item, true))}
             </div>
           </SheetContent>
         </Sheet>
@@ -91,7 +76,7 @@ const NavigationMenu = () => {
       {/* Desktop Menu */}
       <div className="hidden md:block fixed left-0 top-[4em] bg-[#B291FF] rounded-tr-[25px] h-[calc(100vh-4em)] overflow-hidden transition-all duration-300 w-[100px] hover:w-[200px] group z-[10]">
         <div className="flex flex-col gap-2 p-[24px] pr-0 pt-[60px]">
-          {menuItems.map(item => renderMenuItem(item))}
+          {MenuItems.map(item => renderMenuItem(item))}
         </div>
       </div>
     </>
