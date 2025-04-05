@@ -1,5 +1,5 @@
 import { Home, LucideIcon, Calendar, User, BookOpen, Settings, Globe } from 'lucide-react';
-import { Navigation } from '@/shared/config/navigation';
+import { Navigation } from '@/shared/config/Navigation';
 
 export interface MenuItem {
     name: string;
