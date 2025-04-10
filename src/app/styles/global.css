@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--color-background);
+}
+
+@theme {
+    --color-background: #f5f5f5;
+    --color-black: #252525;
+    --color-dark-grey: #525252;
+    --color-grey: #a3a3a3;
+    --color-light-grey: #fafafa;
+    --color-purple: #b291ff;
+    --color-pink: #fec1ff;
+    --color-blue: #d8e6ff;
+    --font-Xolonium: "Xolonium", sans-serif;
+    --font-Montserrat: "Montserrat", sans-serif;
+}
+
+@font-face {
+    font-family: 'Xolonium', sans-serif;
+    src: url('./assets/fonts/Xolonium-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Xolonium', sans-serif;
+    src: url('./assets/fonts/Xolonium-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
