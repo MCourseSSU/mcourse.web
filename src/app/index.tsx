@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Providers } from './providers/Providers'
+import { Providers } from './providers/providers'
 import { Router } from './router'
 import App from './App'
 
