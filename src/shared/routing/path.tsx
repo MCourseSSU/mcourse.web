@@ -1,4 +1,4 @@
-export enum Navigation {
+export enum Path {
     Home = '/',
     Calendar = '/calendar',
     Courses = '/courses',

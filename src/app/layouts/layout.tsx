@@ -1,8 +1,8 @@
-interface AppLayoutProps {
+interface Layout {
     children: React.ReactNode
 }
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout({ children }: Layout) {
     return (
         <div className="flex">
             {/* header */}

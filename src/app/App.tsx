@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import './global.css'
+import './styles/global.css'
 
 const App = () => {
   return (
