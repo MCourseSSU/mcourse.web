@@ -1,3 +1,5 @@
+import Header from "@/widgets/navigation/Header/Header"
+
 interface Layout {
     children: React.ReactNode
 }
@@ -5,7 +7,7 @@ interface Layout {
 export default function AppLayout({ children }: Layout) {
     return (
         <div className="flex">
-            {/* header */}
+                <Header />
             <div>
                 {/* sidebar */}
                 <main className="flex-1">{children}</main>
