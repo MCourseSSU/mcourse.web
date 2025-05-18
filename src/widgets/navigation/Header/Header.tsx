@@ -7,7 +7,21 @@ export default function Header() {
     const [isActive, setActive] = useState(false);
     const [isNotificationActive, setNotificationActive] = useState(false);
 
-    return <nav className=" bg-background flex w-full justify-around items-center h-20 gap-x-400">
+
+const toggleNotifications = () => {
+  setNotificationActive((prev) => {
+    if (!prev) setActive(false); 
+    return !prev;
+  });
+};
+
+const toggleProfileMenu = () => {
+  setActive((prev) => {
+    if (!prev) setNotificationActive(false);
+    return !prev;
+  });
+};
+    return <nav className=" bg-background flex w-full justify-between items-center h-20 px-10">
         <div>
             <Link to={Path.Home}>
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +38,7 @@ export default function Header() {
             </Link>
         </div>
         <div className='flex flex-row items-center gap-2 mr-2'>
-            <button onClick={() => setNotificationActive(!isNotificationActive)}>
+            <button onClick={toggleNotifications}>
                 <svg width="15"
                     height="17"
                     viewBox="0 0 15 17"
@@ -42,8 +56,8 @@ export default function Header() {
                 <a href=""><img src="" alt="Profile" className='max-w-8 max-h-8 rounded-full' /></a>
             </div>
 
-            <div onClick={() => setActive(!isActive)}>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg" className={`max-w-6 max-h-6 cursor-pointer ${isActive ? 'rotate-180 transition duration-120' : 'transition duration-85'}`}>
+            <div onClick={toggleProfileMenu}>
+                <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg" className={`max-w-6 max-h-6 cursor-pointer ${isActive ? 'rotate-180 transition duration-120 ' : 'transition duration-85'}`}>
                     <path d="M13 1L7 7L1 1" stroke="#525252" stroke-width="1.5" />
                 </svg>
                 <div className={`flex flex-col absolute items-center justify-center gap-y-1 z-10 w-50 h-25 right-3 top-15 shadow-lg rounded-2xl overflow-hidden transition-all duration-150 ${isActive
